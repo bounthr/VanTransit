@@ -16,7 +16,7 @@ class GoogleSDK {
     var locationManager = CLLocationManager()
     var currentLocation: CLLocation?
     var gmsMapView: GMSMapView!
-    var zoomLevel: Float = 20
+    var zoomLevel: Float = 18
     var didFindMyLocation = false
     var markersArray: [BusStop] = []
     
@@ -70,7 +70,15 @@ class GoogleSDK {
                 let position = CLLocationCoordinate2D(latitude: busStop.latitude, longitude: busStop.longitude)
                 let marker = GMSMarker(position: position)
                 
-                marker.title = "\(count)"
+                marker.title = busStop.name
+                var busRoutes = ""
+                for route in busStop.routes {
+                    busRoutes += route
+                    busRoutes += ", "
+                }
+                busRoutes = String(busRoutes.dropLast(2))
+
+                marker.snippet = "Stop No.\(String(busStop.stopNo)) - Bus : \(busRoutes)"
                 marker.icon = iconBusStopImage
                 count += 1
                 
@@ -128,10 +136,14 @@ extension SearchViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
-        print(marker)
+        self.gmsdk.gmsMapView.selectedMarker = marker;
+
         guard let markerTitle = marker.title else { return true }
-        if let count = Int(markerTitle) {
-            print(self.gmsdk.markersArray[count])
+        
+        for bus in self.gmsdk.markersArray {
+            if bus.name == markerTitle {
+                print(bus)
+            }
         }
         return true
     }
