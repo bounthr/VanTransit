@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D156F35219E07F500B97FF1 /* SearchDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D156F34219E07F500B97FF1 /* SearchDetailsViewController.swift */; };
+		6D156F37219E536D00B97FF1 /* SearchDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D156F36219E536D00B97FF1 /* SearchDetailsTableViewCell.swift */; };
 		6D73F8E0219CE52100120451 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D73F8DF219CE52100120451 /* AppDelegate.swift */; };
 		6D73F8E5219CE52100120451 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D73F8E3219CE52100120451 /* Main.storyboard */; };
 		6D73F8E8219CE52100120451 /* VanTransit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6D73F8E6219CE52100120451 /* VanTransit.xcdatamodeld */; };
@@ -24,6 +26,8 @@
 /* Begin PBXFileReference section */
 		1F4F325C9DF797325A48D827 /* Pods-VanTransit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VanTransit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VanTransit/Pods-VanTransit.debug.xcconfig"; sourceTree = "<group>"; };
 		3AE880C18E66598B87BA8294 /* Pods_VanTransit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VanTransit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D156F34219E07F500B97FF1 /* SearchDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsViewController.swift; sourceTree = "<group>"; };
+		6D156F36219E536D00B97FF1 /* SearchDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		6D73F8DC219CE52100120451 /* VanTransit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VanTransit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D73F8DF219CE52100120451 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D73F8E4219CE52100120451 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -92,8 +96,8 @@
 			children = (
 				6D73F8F6219CE99D00120451 /* Controllers */,
 				6D73F8F4219CE99D00120451 /* Models */,
-				6D73F8F5219CE99D00120451 /* SupportingFiles */,
 				6D73F8F7219CE99D00120451 /* Views */,
+				6D73F8F5219CE99D00120451 /* SupportingFiles */,
 			);
 			path = VanTransit;
 			sourceTree = "<group>";
@@ -149,6 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				6D73F8FE219CED2900120451 /* SearchViewController.swift */,
+				6D156F34219E07F500B97FF1 /* SearchDetailsViewController.swift */,
+				6D156F36219E536D00B97FF1 /* SearchDetailsTableViewCell.swift */,
 				6D73F902219CEED900120451 /* GoogleSDK.swift */,
 			);
 			path = Search;
@@ -305,8 +311,10 @@
 				6D73F8FF219CED2900120451 /* SearchViewController.swift in Sources */,
 				6D73F905219CEFB000120451 /* BusStop.swift in Sources */,
 				6D73F903219CEED900120451 /* GoogleSDK.swift in Sources */,
+				6D156F35219E07F500B97FF1 /* SearchDetailsViewController.swift in Sources */,
 				6D73F901219CED3600120451 /* FavoritesTableViewController.swift in Sources */,
 				6D73F8E0219CE52100120451 /* AppDelegate.swift in Sources */,
+				6D156F37219E536D00B97FF1 /* SearchDetailsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

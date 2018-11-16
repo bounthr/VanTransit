@@ -40,20 +40,11 @@ class SearchViewController: UIViewController {
         
         self.gmsdk.initLocationManager()
         self.gmsdk.locationManager.delegate = self
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        let view: UIView = self.mapView
-        print("view height \(view.frame.height) view width \(view.frame.width)")
         
         self.gmsdk.initCamera(mapView: self.mapView)
         self.gmsdk.gmsMapView.delegate = self
         self.mapView.addSubview(self.gmsdk.gmsMapView)
-        
-        //self.createBottomBusesInfosView()
     }
-    
     
     func addNotificationsObserver() {
         
@@ -77,9 +68,21 @@ class SearchViewController: UIViewController {
                                                          height: 20))
         
         midTargetImgView.image = UIImage(named: "target.png")
-        //midTargetImgView.center = self.mapView.center
         self.mapView.addSubview(midTargetImgView)
         self.middleTargetShowed = true
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       
+        if segue.destination is SearchDetailsViewController {
+            let vc = segue.destination as? SearchDetailsViewController
+
+            let marker = sender as? GMSMarker
+            for bus in self.gmsdk.markersArray {
+                if bus.name == marker?.title {
+                    vc?.busStop = bus
+                }
+            }
+        }
+    }
 }

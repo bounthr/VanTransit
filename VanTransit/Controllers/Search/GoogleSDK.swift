@@ -16,7 +16,7 @@ class GoogleSDK {
     var locationManager = CLLocationManager()
     var currentLocation: CLLocation?
     var gmsMapView: GMSMapView!
-    var zoomLevel: Float = 18
+    var zoomLevel: Float = 17
     var didFindMyLocation = false
     var markersArray: [BusStop] = []
     
@@ -133,19 +133,34 @@ extension SearchViewController: CLLocationManagerDelegate {
 }
 
 extension SearchViewController: GMSMapViewDelegate {
-    
+    /*
+     // For the custom marker infoView
+    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        let view = UIView(frame: CGRect.init(x: 0, y: 0, width: 200, height: 70))
+        view.backgroundColor = UIColor.white
+        view.layer.cornerRadius = 6
+        
+        let lbl1 = UILabel(frame: CGRect.init(x: 8, y: 8, width: view.frame.size.width - 16, height: 15))
+        lbl1.text = "Hi there!"
+        view.addSubview(lbl1)
+        
+        let lbl2 = UILabel(frame: CGRect.init(x: lbl1.frame.origin.x, y: lbl1.frame.origin.y + lbl1.frame.size.height + 3, width: view.frame.size.width - 16, height: 15))
+        lbl2.text = "I am a custom info window."
+        lbl2.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        view.addSubview(lbl2)
+        
+        return view
+    }
+    */
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
         self.gmsdk.gmsMapView.selectedMarker = marker;
-
-        guard let markerTitle = marker.title else { return true }
-        
-        for bus in self.gmsdk.markersArray {
-            if bus.name == markerTitle {
-                print(bus)
-            }
-        }
         return true
+    }
+    
+    func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
+
+        performSegue(withIdentifier: "SearchDetailsViewControllerSegue", sender: marker)
     }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
@@ -154,19 +169,22 @@ extension SearchViewController: GMSMapViewDelegate {
             
             AFWrapper.cancelAllRequests()
             
-            AFWrapper.requestGET(stops: nil, latitude: coordinate.latitude, longitude: coordinate.longitude, success: {
+            let lat = String(format:"%.5f", coordinate.latitude)
+            let long = String(format:"%.5f", coordinate.longitude)
+
+            let url = "&lat=" + lat + "&long=" + long + "&radius=200"
+            
+            AFWrapper.requestGET(urlPartOne: "?", urlPartTwo: url, success: {
                 (JSONResponse) -> Void in
                 
                 self.gmsdk.markersArray.removeAll()
                 self.gmsdk.createMarkers(JSONResponse: JSONResponse)
+              
                 if self.gmsdk.markersArray.count >= 3 {
                     SearchViewController.nbrMarkers = 3
                 } else {
                     SearchViewController.nbrMarkers = self.gmsdk.markersArray.count
-                    
                 }
-                //self.updateBottomBusesInfosView()
-                
             }, failure: {
                 (error) -> Void in
                 print(error)
