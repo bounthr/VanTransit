@@ -38,8 +38,8 @@ struct Bus {
         addedTrip = jsonDict["AddedTrip"] as? Bool ?? false
         destination = jsonDict["Destination"] as? String ?? "none"
         
-        routeNo = jsonDict["RouteNo"] as? String ?? "none"
-        routeName = jsonDict["RouteName"] as? String ?? "none"
-        direction = jsonDict["Direction"] as? String ?? "none"
+        routeNo = "none"
+        routeName = "none"
+        direction = "none"
     }
 }

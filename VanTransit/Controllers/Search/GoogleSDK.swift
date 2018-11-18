@@ -49,7 +49,7 @@ class GoogleSDK {
     func createMarkers(JSONResponse: JSON) {
         
         if let json = JSONResponse.dictionaryObject {
-            if json["Code"] as? String == "1012" {
+            if ((json["Code"] as? String) != nil)  {
                 if let message = json["Message"] {
                     print(message)
                 }
