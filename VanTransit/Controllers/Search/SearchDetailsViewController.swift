@@ -186,10 +186,13 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchDetailsTableViewCell", for: indexPath) as? SearchDetailsTableViewCell else { return UITableViewCell() }
         
-    // to do
         var busInfo = self.busesDictForTableView[self.chosenBus]
         
         cell.routeLabel.text = busInfo?[indexPath.row].routeNo
+        if let imageDirection = busInfo?[indexPath.row].direction {
+            cell.cursorImage.image = UIImage(named: "compass\(String(describing: imageDirection)).png")
+        }
+        cell.destinationLabel.text = busInfo?[indexPath.row].destination
         cell.minutesLeft.text = String(busInfo?[indexPath.row].expectedCountdown ?? 0)
         
         return cell
