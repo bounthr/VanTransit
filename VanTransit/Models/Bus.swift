@@ -36,7 +36,7 @@ struct Bus {
         cancelledStop = jsonDict["CancelledStop"] as? Bool ?? false
         expectedLeaveTime = jsonDict["ExpectedLeaveTime"] as? String ?? "none"
         addedTrip = jsonDict["AddedTrip"] as? Bool ?? false
-        destination = jsonDict["Destination"] as? String ?? "none"
+        destination = jsonDict["Destination"]?.capitalized ?? "none"
         
         routeNo = "none"
         routeName = "none"

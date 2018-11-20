@@ -16,7 +16,7 @@ class GoogleSDK {
     var locationManager = CLLocationManager()
     var currentLocation: CLLocation?
     var gmsMapView: GMSMapView!
-    var zoomLevel: Float = 17
+    var zoomLevel: Float = 16
     var didFindMyLocation = false
     var markersArray: [BusStop] = []
     
