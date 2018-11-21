@@ -16,13 +16,15 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var lastUpdatedAtLabel: UILabel!
     @IBOutlet weak var ActivityLoader: UIActivityIndicatorView!
     
+    private let refreshControl = UIRefreshControl()
+
     var busStop: BusStop?
     var busesArray: [Bus] = []
     var busesAllArray: [Bus] = []
     var busesDictForTableView: [Int : [Bus]] = [:]
     var busButtonsArray: [UIButton] = []
     var chosenBus: Int = 0
-    var firstUpdated = true
+
     /*
      http://api.translink.ca/rttiapi/v1/stops/60980/estimates?apikey=[APIKey]
      - Returns the next 6 buses for each route to service the stop in the next 24 hours
@@ -40,10 +42,16 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
         self.searchDetailsTableView.isHidden = true
         self.ActivityLoader.startAnimating()
         
+        if #available(iOS 10.0, *) {
+            self.searchDetailsTableView.refreshControl = refreshControl
+        } else {
+            self.searchDetailsTableView.addSubview(refreshControl)
+        }
+        self.refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+
         self.buildTopShowAllAndBusesButton()
         self.getBusesInfos()
     }
-    
     
     @IBAction func showAllTapped(_ sender: UIButton) {
         for button in self.busButtonsArray {
@@ -57,9 +65,7 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
         self.searchDetailsTableView.reloadData()
 
     }
-    /*
-     Optional(VanTransit.BusStop(onStreet: "SMITH AVE", longitude: -123.019897, latitude: 49.24677, wheelchairAccess: 1, routes: ["028", "129"], name: "SB SMITH AVE FS SPRUCE ST", atStreet: "SPRUCE ST", stopNo: 51780, distance: 89, bayNo: 0, city: "BURNABY"))
-     */
+
     func buildTopShowAllAndBusesButton() {
         var count = 1
         let margin = self.showAllButton.frame.origin.x
@@ -111,6 +117,10 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
         self.searchDetailsTableView.reloadData()
     }
     
+    @objc private func refreshData(_ sender: Any) {
+        getBusesInfos()
+    }
+    
     func getBusesInfos() {
 
         guard let stopNo = busStop?.stopNo else { return }
@@ -129,6 +139,9 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
             } else if let json = JSONResponse.arrayObject {
                
                 self.busesArray.removeAll()
+                self.busesAllArray.removeAll()
+                self.busesDictForTableView.removeAll()
+                
                 var count = 1
                 
                 for busEstimateInfo in json as! [[String : AnyObject]] {
@@ -142,12 +155,6 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
                             print(busInfo)
                             var bus = Bus(jsonDict: busInfo)
                             
-                            if self.firstUpdated == true {
-                                self.lastUpdatedAtLabel.text = "Last updated at : " + bus.lastUpdate
-                                self.lastUpdatedAtLabel.isHidden = false
-                                self.firstUpdated = false
-                            }
-                            
                             bus.direction = direction
                             bus.routeName = routeName.capitalized
                             bus.routeNo = routeNo
@@ -159,12 +166,20 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
                         count = count + 1
                     }
                 }
-                self.firstUpdated = true
+                let todaysDate = NSDate()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "hh:mm:ss a"
+                let dateInFormat = dateFormatter.string(from: todaysDate as Date)
+
+                self.lastUpdatedAtLabel.text = "Last updated at : " + dateInFormat
+                self.lastUpdatedAtLabel.isHidden = false
+
                 self.busesDictForTableView[0] = self.busesAllArray.sorted(by: { $0.expectedCountdown < $1.expectedCountdown })
                 print(self.busesDictForTableView)
                 
                 self.ActivityLoader.stopAnimating()
                 self.searchDetailsTableView.isHidden = false
+                self.refreshControl.endRefreshing()
                 self.searchDetailsTableView.reloadData()
             }
         }, failure: {
@@ -192,8 +207,40 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
         if let imageDirection = busInfo?[indexPath.row].direction {
             cell.cursorImage.image = UIImage(named: "compass\(String(describing: imageDirection)).png")
         }
-        cell.destinationLabel.text = busInfo?[indexPath.row].destination
-        cell.minutesLeft.text = String(busInfo?[indexPath.row].expectedCountdown ?? 0)
+        if let dest = busInfo?[indexPath.row].destination {
+            cell.destinationLabel.text = "To : \(String(describing: dest))"
+        }
+        if let mins = busInfo?[indexPath.row].expectedCountdown {
+            if mins >= 60 {
+                if let leaveAt = busInfo?[indexPath.row].expectedLeaveTime {
+                    
+                    if let index = (leaveAt.range(of: " ")?.lowerBound) {
+
+                        let beforeSpaceString = String(leaveAt.prefix(upTo: index))
+                        cell.expectLeaveLabel.text = beforeSpaceString
+                    } else {
+                        cell.expectLeaveLabel.text = leaveAt
+                    }
+                    cell.expectLeaveLabel.textColor = .black
+                    cell.expectLeaveLabel.isHidden = false
+                    cell.minsLabel.isHidden = true
+                    cell.minutesLeft.isHidden = true
+                }
+            } else if mins > 0 {
+                cell.minutesLeft.text = String(mins)
+                cell.minutesLeft.textColor = .black
+                cell.minsLabel.isHidden = false
+                cell.minutesLeft.isHidden = false
+                cell.expectLeaveLabel.isHidden = true
+
+            } else {
+                cell.expectLeaveLabel.text = "Due"
+                cell.expectLeaveLabel.textColor = .red
+                cell.expectLeaveLabel.isHidden = false
+                cell.minsLabel.isHidden = true
+                cell.minutesLeft.isHidden = true
+            }
+        }
         
         return cell
     }

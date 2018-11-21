@@ -77,8 +77,8 @@
                                                         <constraint firstAttribute="width" secondItem="oAH-ZP-TD1" secondAttribute="height" multiplier="1:1" id="5SS-Ef-Iya"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To Capilano U" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BYj-jW-jc8">
-                                                    <rect key="frame" x="48" y="57" width="106" height="22"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To Capilano U test test test test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BYj-jW-jc8">
+                                                    <rect key="frame" x="48" y="57" width="241" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -98,6 +98,15 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15:27pm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQT-at-seB">
+                                                    <rect key="frame" x="273" y="32.5" width="103" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="Y3e-xK-tlK"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="V5H-Xc-PDC" firstAttribute="top" secondItem="Z0L-m0-0cR" secondAttribute="topMargin" id="2L1-Yn-aM7"/>
@@ -106,8 +115,11 @@
                                                 <constraint firstItem="zrL-b4-rBo" firstAttribute="top" secondItem="uIj-00-Hks" secondAttribute="bottom" constant="-5" id="8cR-b8-xrg"/>
                                                 <constraint firstAttribute="trailing" secondItem="uIj-00-Hks" secondAttribute="trailing" constant="2" id="Aja-YK-hpU"/>
                                                 <constraint firstItem="BYj-jW-jc8" firstAttribute="top" secondItem="V5H-Xc-PDC" secondAttribute="bottom" constant="1" id="Exy-ZB-AmL"/>
-                                                <constraint firstItem="uIj-00-Hks" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BYj-jW-jc8" secondAttribute="trailing" constant="145" id="GFg-ew-bEt"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="BYj-jW-jc8" secondAttribute="trailing" constant="79" id="GbH-E8-Epg"/>
+                                                <constraint firstAttribute="trailing" secondItem="eQT-at-seB" secondAttribute="trailing" id="IKn-io-lzH"/>
                                                 <constraint firstItem="V5H-Xc-PDC" firstAttribute="leading" secondItem="Z0L-m0-0cR" secondAttribute="leadingMargin" id="LSR-XU-yh0"/>
+                                                <constraint firstItem="eQT-at-seB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="V5H-Xc-PDC" secondAttribute="trailing" constant="8" symbolic="YES" id="Ulm-HQ-Ktr"/>
+                                                <constraint firstItem="eQT-at-seB" firstAttribute="centerY" secondItem="Z0L-m0-0cR" secondAttribute="centerY" id="Vzf-k3-1pv"/>
                                                 <constraint firstItem="zrL-b4-rBo" firstAttribute="centerX" secondItem="uIj-00-Hks" secondAttribute="centerX" id="fPJ-qz-Dg0"/>
                                                 <constraint firstItem="oAH-ZP-TD1" firstAttribute="top" secondItem="V5H-Xc-PDC" secondAttribute="bottom" constant="2" id="hSS-hQ-af3"/>
                                                 <constraint firstItem="uIj-00-Hks" firstAttribute="top" secondItem="Z0L-m0-0cR" secondAttribute="top" constant="6" id="nZc-8f-zT6"/>
@@ -119,6 +131,8 @@
                                         <connections>
                                             <outlet property="cursorImage" destination="oAH-ZP-TD1" id="C6V-cu-lAp"/>
                                             <outlet property="destinationLabel" destination="BYj-jW-jc8" id="kT8-Ib-yLy"/>
+                                            <outlet property="expectLeaveLabel" destination="eQT-at-seB" id="fAW-kK-82D"/>
+                                            <outlet property="minsLabel" destination="zrL-b4-rBo" id="D0z-UF-pym"/>
                                             <outlet property="minutesLeft" destination="uIj-00-Hks" id="tMl-KP-wKc"/>
                                             <outlet property="routeLabel" destination="V5H-Xc-PDC" id="SQG-4N-T0k"/>
                                         </connections>

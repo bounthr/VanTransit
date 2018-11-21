@@ -14,6 +14,8 @@ class SearchDetailsTableViewCell: UITableViewCell {
     @IBOutlet weak var minutesLeft: UILabel!
     @IBOutlet weak var cursorImage: UIImageView!
     @IBOutlet weak var destinationLabel: UILabel!
+    @IBOutlet weak var minsLabel: UILabel!
+    @IBOutlet weak var expectLeaveLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
