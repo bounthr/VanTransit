@@ -15,6 +15,7 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var showAllButton: UIButton!
     @IBOutlet weak var lastUpdatedAtLabel: UILabel!
     @IBOutlet weak var ActivityLoader: UIActivityIndicatorView!
+    @IBOutlet weak var favoriteButton: UIButton!
     
     private let refreshControl = UIRefreshControl()
 
@@ -41,7 +42,7 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.searchDetailsTableView.isHidden = true
         self.ActivityLoader.startAnimating()
-        
+        //check if favorite, if yes, self.favoriteButton.isSelected = true
         if #available(iOS 10.0, *) {
             self.searchDetailsTableView.refreshControl = refreshControl
         } else {
@@ -66,6 +67,23 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
 
     }
 
+    @IBAction func backButton(_ sender: Any) {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @IBAction func favoriteButton(_ sender: Any) {
+        /* isChecked = !isChecked
+        if isChecked {
+            sender.setTitle("✓", for: .normal)
+            sender.setTitleColor(.green, for: .normal)
+        } else {
+            sender.setTitle("X", for: .normal)
+            sender.setTitleColor(.red, for: .normal)
+        }
+         */
+    }
+    
+    
     func buildTopShowAllAndBusesButton() {
         var count = 1
         let margin = self.showAllButton.frame.origin.x
@@ -241,7 +259,6 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
                 cell.minutesLeft.isHidden = true
             }
         }
-        
         return cell
     }
 

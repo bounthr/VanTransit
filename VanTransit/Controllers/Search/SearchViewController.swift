@@ -9,6 +9,14 @@
 import UIKit
 import GoogleMaps
 
+struct System {
+    static func clearNavigationBar(forBar navBar: UINavigationBar) {
+        navBar.setBackgroundImage(UIImage(), for: .default)
+        navBar.shadowImage = UIImage()
+        navBar.isTranslucent = true
+    }
+}
+
 class SearchViewController: UIViewController {
 
     @IBOutlet weak var mapView: UIView!
@@ -76,7 +84,7 @@ class SearchViewController: UIViewController {
        
         if segue.destination is SearchDetailsViewController {
             let vc = segue.destination as? SearchDetailsViewController
-
+            
             let marker = sender as? GMSMarker
             for bus in self.gmsdk.markersArray {
                 if bus.name == marker?.title {
