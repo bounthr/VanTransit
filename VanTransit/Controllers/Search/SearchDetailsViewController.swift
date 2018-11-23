@@ -16,6 +16,7 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var lastUpdatedAtLabel: UILabel!
     @IBOutlet weak var ActivityLoader: UIActivityIndicatorView!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var NavigationBarLabel: UILabel!
     
     private let refreshControl = UIRefreshControl()
 
@@ -50,10 +51,17 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
         }
         self.refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
 
+        self.buildCustomNavigationBar()
         self.buildTopShowAllAndBusesButton()
         self.getBusesInfos()
     }
     
+    func buildCustomNavigationBar() {
+        
+        if let name = busStop?.name {
+            self.NavigationBarLabel.text = name
+        }
+    }
     @IBAction func showAllTapped(_ sender: UIButton) {
         for button in self.busButtonsArray {
             button.backgroundColor = UIColor(red: 65/255.0, green: 84/255.0, blue: 178/255.0, alpha: 1.0)
@@ -85,7 +93,6 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
     
     
     func buildTopShowAllAndBusesButton() {
-        var count = 1
         let margin = self.showAllButton.frame.origin.x
         var nextX = self.showAllButton.frame.maxX + margin
         
@@ -106,8 +113,9 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
             nextX = button.frame.maxX + margin
             
             button.layer.cornerRadius = 5
-            button.tag = count
-
+            if let root = Int(route) {
+                button.tag = root
+            }
             button.backgroundColor = UIColor(red: 65/255.0, green: 84/255.0, blue: 178/255.0, alpha: 1.0)
             button.tintColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
             button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
@@ -115,7 +123,6 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
             self.busButtonsArray.append(button)
             self.busesChoicesTopView.addSubview(button)
 
-            count = count + 1
             print(button.frame)
         }
     }
@@ -179,7 +186,9 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
                             self.busesArray.append(bus)
                             self.busesAllArray.append(bus)
                         }
-                        self.busesDictForTableView[count] = self.busesArray
+                        if let root = Int(routeNo) {
+                            self.busesDictForTableView[root] = self.busesArray
+                        }
                         self.busesArray.removeAll()
                         count = count + 1
                     }
@@ -209,7 +218,7 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
 // MARK: - TableView DataSource
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.busesDictForTableView[self.chosenBus]?.count ?? 1
+        return self.busesDictForTableView[self.chosenBus]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

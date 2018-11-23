@@ -209,11 +209,11 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pBC-tu-W1c">
-                                        <rect key="frame" x="60" y="0.0" width="294.5" height="41"/>
+                                        <rect key="frame" x="62.5" y="0.0" width="289" height="41"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Northbound Smith Ave @ Spruce St test test" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="leI-Kh-2tn">
-                                                <rect key="frame" x="46" y="0.0" width="248.5" height="41"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <rect key="frame" x="46" y="0.0" width="243" height="41"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -292,6 +292,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="ActivityLoader" destination="Lna-EW-t7y" id="lKb-Wc-Y84"/>
+                        <outlet property="NavigationBarLabel" destination="leI-Kh-2tn" id="4ay-ca-u7u"/>
                         <outlet property="busesChoicesTopView" destination="COI-kb-4ih" id="YQG-yD-JSi"/>
                         <outlet property="favoriteButton" destination="aeP-Gi-gIr" id="SeN-rZ-HbL"/>
                         <outlet property="lastUpdatedAtLabel" destination="LpA-d1-yU3" id="YA0-iQ-DL7"/>
