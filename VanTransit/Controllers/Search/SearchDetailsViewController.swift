@@ -26,7 +26,9 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
     var busesDictForTableView: [Int : [Bus]] = [:]
     var busButtonsArray: [UIButton] = []
     var chosenBus: Int = 0
-
+    var favoriteArray: [BusStop] = []
+    var isChecked = false
+    
     /*
      http://api.translink.ca/rttiapi/v1/stops/60980/estimates?apikey=[APIKey]
      - Returns the next 6 buses for each route to service the stop in the next 24 hours
@@ -37,7 +39,6 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.searchDetailsTableView.delegate = self
         self.searchDetailsTableView.dataSource = self
         
@@ -61,6 +62,28 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
         if let name = busStop?.name {
             self.NavigationBarLabel.text = name
         }
+        let unarchivedObject = UserDefaults.standard.object(forKey: "Favorites")
+        if unarchivedObject != nil {
+            if let data = unarchivedObject as? Data {
+                do {
+                    guard let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [BusStop] else {
+                        fatalError("loadWidgetDataArray - Can't get Array")
+                    }
+                    self.favoriteArray = array                    
+                } catch {
+                    fatalError("loadWidgetDataArray - Can't encode data: \(error)")
+                }
+            }
+        }
+        if self.favoriteArray.count > 0 {
+            for bus in self.favoriteArray as [BusStop] {
+                if self.busStop?.stopNo == bus.stopNo {
+                    self.favoriteButton.isSelected = true
+                    self.isChecked = true
+                    break
+                }
+            }
+        }
     }
     @IBAction func showAllTapped(_ sender: UIButton) {
         for button in self.busButtonsArray {
@@ -79,18 +102,27 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
         self.navigationController?.popToRootViewController(animated: true)
     }
     
-    @IBAction func favoriteButton(_ sender: Any) {
-        /* isChecked = !isChecked
+    @IBAction func favoriteButton(_ sender: UIButton) {
+        self.isChecked = !self.isChecked
         if isChecked {
-            sender.setTitle("✓", for: .normal)
-            sender.setTitleColor(.green, for: .normal)
+            sender.isSelected = true
+            self.favoriteArray.append(self.busStop!)
         } else {
-            sender.setTitle("X", for: .normal)
-            sender.setTitleColor(.red, for: .normal)
+            sender.isSelected = false
+            var count = 0
+            for bus in self.favoriteArray as [BusStop] {
+                if self.busStop?.stopNo == bus.stopNo {
+                    self.favoriteArray.remove(at: count)
+                    break
+                }
+                count += 1
+            }
+        }        
+        guard let data = try? NSKeyedArchiver.archivedData(withRootObject: self.favoriteArray, requiringSecureCoding: false) else {
+            fatalError("archivedData failed")
         }
-         */
+        UserDefaults.standard.set(data, forKey: "Favorites")
     }
-    
     
     func buildTopShowAllAndBusesButton() {
         let margin = self.showAllButton.frame.origin.x
