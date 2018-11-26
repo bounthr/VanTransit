@@ -154,8 +154,6 @@ class SearchDetailsViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.busButtonsArray.append(button)
             self.busesChoicesTopView.addSubview(button)
-
-            print(button.frame)
         }
     }
     
