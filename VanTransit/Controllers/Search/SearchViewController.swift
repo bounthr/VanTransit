@@ -43,8 +43,6 @@ class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.addNotificationsObserver()
         
         self.gmsdk.initLocationManager()
         self.gmsdk.locationManager.delegate = self
@@ -54,20 +52,6 @@ class SearchViewController: UIViewController {
         self.mapView.addSubview(self.gmsdk.gmsMapView)
     }
     
-    func addNotificationsObserver() {
-        
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(showHomeViewController),
-//                                               name: NSNotification.Name("ShowHomeViewController"),
-//                                               object: nil)
-//
-//
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(showTimesViewController),
-//                                               name: NSNotification.Name("ShowTimesViewController"),
-//                                               object: nil)
-    }
-
     func createMiddleTarget() {
         
         let midTargetImgView = UIImageView(frame: CGRect(x: self.mapView.frame.width / 2 - 10,
@@ -80,6 +64,12 @@ class SearchViewController: UIViewController {
         self.middleTargetShowed = true
     }
 
+    
+    @IBAction func homeButtonTapped(_ sender: UIButton) {
+        let location = GMSCameraPosition.camera(withLatitude: 49.283300, longitude: -123.115900, zoom: 16.0)
+        self.gmsdk.gmsMapView.animate(to: location)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        
         if segue.destination is SearchDetailsViewController {

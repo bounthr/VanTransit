@@ -22,13 +22,26 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jq0-hF-XWx">
+                                <rect key="frame" x="30" y="750" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="84P-0D-MLh"/>
+                                    <constraint firstAttribute="width" secondItem="Jq0-hF-XWx" secondAttribute="height" multiplier="1:1" id="LVA-66-IgA"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="house"/>
+                                <connections>
+                                    <action selector="homeButtonTapped:" destination="LF9-CI-cwN" eventType="touchUpInside" id="q7H-j9-irZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="YLT-4G-Xas" firstAttribute="leading" secondItem="bRw-el-SO4" secondAttribute="leading" id="ID7-1x-wHt"/>
+                            <constraint firstItem="Jq0-hF-XWx" firstAttribute="leading" secondItem="bRw-el-SO4" secondAttribute="leading" constant="30" id="bIO-aA-unt"/>
                             <constraint firstItem="bRw-el-SO4" firstAttribute="bottom" secondItem="YLT-4G-Xas" secondAttribute="bottom" id="iG9-lq-GfF"/>
                             <constraint firstItem="bRw-el-SO4" firstAttribute="trailing" secondItem="YLT-4G-Xas" secondAttribute="trailing" id="in3-fR-iNc"/>
                             <constraint firstItem="YLT-4G-Xas" firstAttribute="top" secondItem="bRw-el-SO4" secondAttribute="top" id="s0T-4m-Ofd"/>
+                            <constraint firstItem="bRw-el-SO4" firstAttribute="bottom" secondItem="Jq0-hF-XWx" secondAttribute="bottom" constant="23" id="tH3-pn-EvR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bRw-el-SO4"/>
                     </view>
@@ -474,10 +487,11 @@
         <image name="backIcon" width="16" height="16"/>
         <image name="busSquare" width="16" height="16"/>
         <image name="compassEAST" width="16" height="16"/>
+        <image name="house" width="32" height="32"/>
         <image name="starFilled" width="16" height="16"/>
         <image name="starUnfilled" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PLK-0e-dyN"/>
+        <segue reference="S6a-Fe-S8S"/>
     </inferredMetricsTieBreakers>
 </document>

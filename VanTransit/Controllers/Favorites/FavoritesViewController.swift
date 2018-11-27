@@ -59,10 +59,9 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         let bus = self.favoriteArray[indexPath.row]
         
         cell.stopNo.text = String(bus.stopNo)
-        cell.cityName.text = bus.city
+        cell.cityName.text = bus.city.capitalized
         cell.streetName.text = bus.name
         cell.buildBusesViewInCell(busRoutes: bus.routes)
-        
         
         return cell
     }
